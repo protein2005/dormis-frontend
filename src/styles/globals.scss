@@ -1,0 +1,126 @@
+html {
+  &.is-lock {
+    overflow: hidden;
+  }
+  scrollbar-gutter: auto;
+}
+
+body {
+  font-size: 18px;
+
+  font-family:
+    'San Francisco',
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    'Segoe UI',
+    Helvetica,
+    Arial,
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol';
+}
+
+main {
+  flex-grow: 1;
+}
+
+a,
+button,
+label,
+input,
+textarea,
+select,
+svg * {
+  transition-duration: var(--transition-duration);
+}
+
+a {
+  color: inherit;
+
+  @include hover {
+    color: var(--color-red);
+  }
+
+  &[class] {
+    text-decoration: none;
+  }
+}
+
+:has(.swiper) {
+  min-width: 0;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #fff inset;
+  box-shadow: 0 0 0 1000px #fff inset;
+  -webkit-text-fill-color: #000;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient-move {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  .display-question-block,
+  .display-choice-item.selected,
+  .display-matchpairs__row,
+  .display-essay__answer {
+    background-color: inherit !important;
+    color: inherit !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  .display-choice-item.selected {
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .checkbox-indicator,
+  .radio-indicator,
+  .arrow {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
