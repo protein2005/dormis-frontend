@@ -43,6 +43,7 @@ const authSlice = createSlice({
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
         state.isAuth = false;
+        state.memberships = [];
         localStorage.removeItem('token');
       })
       .addMatcher(isPending(registerUser, loginUser), (state) => {
@@ -55,11 +56,11 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         localStorage.setItem('token', action.payload.accessToken);
         state.error = null;
-    }).addMatcher(isRejected(registerUser, loginUser), (state, action) => {
-        state.isLoading = false;
-        state.user = null;
-        state.error = action.payload;
-    })
+      }).addMatcher(isRejected(registerUser, loginUser), (state, action) => {
+          state.isLoading = false;
+          state.user = null;
+          state.error = action.payload;
+      })
   },
 });
 

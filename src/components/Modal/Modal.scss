@@ -1,0 +1,58 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  @include flex-center;
+  padding: fluid(20, 15);
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  max-width: 500px;
+  border-radius: var(--border-radius-large);
+  padding: fluid(40, 25);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  z-index: 1001;
+
+  &__header {
+    @include flex-center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    h2 {
+      @include fluid-text(24, 20);
+      font-weight: 800;
+      color: var(--color-text-black);
+    }
+  }
+}
+
+.modal-close {
+  @include flex-center;
+  @include square(36px);
+  background: var(--color-white-dark);
+  border-radius: 12px;
+  color: var(--color-text-gray);
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+
+  @include hover {
+    background-color: var(--color-red-light);
+    color: var(--color-red-dark);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
