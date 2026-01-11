@@ -1,53 +1,52 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import OAuthSuccess from '../pages/OAuthSuccess';
-import Onboarding from "@/pages/Onboarding";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
 import { useActions } from "@/hooks/useActions";
 
+import MainLayout from "@/layout/MainLayout";
+import Home from "@/pages/Home";
+import Onboarding from "@/pages/Onboarding";
+import OAuthSuccess from '../pages/OAuthSuccess';
+import OnboardingLayout from "@/layout/OnboardingLayout";
+import Dormitories from "@/pages/Dormitories";
+import Login from "@/pages/Auth/Login";
+import Register from "@/pages/Auth/Register";
+import Loader from "@/components/Loader";
+
 const AppRouter = () => {
-  const { isAuth, isLoading } = useSelector(state => state.auth);
-  const { meAuth } = useActions()
+  const { isAuth, isLoading, memberships } = useSelector(state => state.auth);
+  const { meAuth } = useActions();
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      meAuth()
+      meAuth();
     }
   }, []);
 
   if (isLoading) {
-    return (
-      <div>
-        <p>
-          Завантаження...
-        </p>
-      </div>
-    );
+    return <Loader />
   }
+
+  const authRedirectPath = memberships?.length > 0 ? "/dormitories" : "/onboarding";
 
   return (
     <Routes>
-      <Route
-        path="/login"
-        element={!isAuth ? <Login /> : <Navigate to="/onboarding" />}
-      />
-      <Route
-        path="/register"
-        element={!isAuth ? <Register /> : <Navigate to="/onboarding" />}
-      />
-      <Route path="/oauth-success" element={<OAuthSuccess />} />
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
+      </Route>
 
-      <Route
-        path="/onboarding"
-        element={isAuth ? <Onboarding /> : <Navigate to="/login" />}
-      />
+      <Route element={!isAuth ? <MainLayout /> : <Navigate to={authRedirectPath} replace />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
 
-      <Route
-        path="*"
-        element={<Navigate to={isAuth ? "/onboarding" : "/login"} />}
-      />
+      <Route element={isAuth ? <OnboardingLayout /> : <Navigate to="/login" replace />}>
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/dormitories" element={<Dormitories />} />
+      </Route>
+
+      <Route path="*" element={<Navigate to={isAuth ? authRedirectPath : "/login"} replace />} />
     </Routes>
   );
 };

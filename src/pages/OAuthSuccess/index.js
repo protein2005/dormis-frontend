@@ -1,3 +1,1 @@
-import OAuthSuccess from "./OAuthSuccess";
-
-export default OAuthSuccess;
+export { default } from './OAuthSuccess';

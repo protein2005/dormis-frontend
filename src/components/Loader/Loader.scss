@@ -1,0 +1,49 @@
+.loader-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--color-white);
+  @include flex-center;
+
+  &__container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__logo {
+    @include fluid-text(48, 36);
+    font-weight: 800;
+    color: var(--color-text-black);
+    letter-spacing: -1px;
+
+    span {
+      color: var(--color-blue);
+    }
+  }
+
+  &__bar {
+    width: 200px;
+    height: 4px;
+    background-color: var(--color-white-light);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__progress {
+    height: 100%;
+    background-color: var(--color-blue);
+    border-radius: 10px;
+  }
+
+  &__text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}

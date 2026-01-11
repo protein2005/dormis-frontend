@@ -13,6 +13,7 @@ import {
 
 const initialState = {
   user: null,
+  memberships: [],
   isAuth: false,
   isLoading: false,
   error: null,
@@ -23,9 +24,21 @@ const authSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
+      .addCase(meAuth.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(meAuth.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
+        state.memberships = action.payload.memberships;
         state.isAuth = true;
+        state.isLoading = false;
+      })
+      .addCase(meAuth.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isAuth = false;
+        state.user = null;
+        state.error = action.payload;
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;

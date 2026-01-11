@@ -1,0 +1,97 @@
+.dormitories {
+  padding: fluid(60, 30) 0;
+  background-color: var(--color-white-dark);
+  min-height: calc(100vh - 160px);
+
+  &__header {
+    @include flex-center;
+    justify-content: space-between;
+    margin-bottom: fluid(40, 25);
+
+    h1 {
+      @include fluid-text(36, 26);
+      font-weight: 800;
+    }
+  }
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 fluid(20, 15);
+  }
+}
+
+.dorm-group {
+  margin-bottom: 40px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: var(--border);
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-text-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .icon-owner { color: var(--color-blue); }
+    .icon-admin { color: var(--color-purple); }
+    .icon-resident { color: var(--color-green-dark); }
+  }
+}
+
+.dorm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.dorm-card {
+  background: var(--color-white);
+  border: var(--border);
+  border-radius: var(--border-radius-medium);
+  padding: 24px;
+  @include flex-center;
+  justify-content: space-between;
+  transition: all var(--transition-duration);
+  text-decoration: none;
+
+  @include hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+    border-color: var(--color-blue);
+  }
+
+  &__info {
+    h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--color-text-black);
+    }
+    p {
+      font-size: 14px;
+      color: var(--color-text-gray);
+    }
+  }
+
+  &--owner { border-left: 4px solid var(--color-blue); }
+  &--admin { border-left: 4px solid var(--color-purple); }
+  &--resident { border-left: 4px solid var(--color-green-dark); }
+}
+
+.btn-add {
+  @include flex-center;
+  gap: 8px;
+  background-color: var(--color-blue);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--border-radius-small);
+  font-weight: 600;
+}
