@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useActions } from "@/hooks/useActions";
 import './Header.scss';
-import { LogOut } from "lucide-react";
+import UserProfile from "@/components/UserProfile";
 
 const Header = ({ variant }) => {
   const { isAuth, user } = useSelector(state => state.auth);
-  const { logoutUser } = useActions();
-
   const isOnboarding = variant === 'onboarding';
 
   return (
@@ -26,24 +23,7 @@ const Header = ({ variant }) => {
 
         <div className="header__actions">
           {isAuth ? (
-            <>
-              {isOnboarding ? (
-                <>
-                  <button
-                    className="btn-logout"
-                    onClick={logoutUser}
-                    type="button"
-                  >
-                    <LogOut size={18} />
-                    <span>Вийти</span>
-                  </button>
-                </>
-              ) : (
-                <Link to="/onboarding" className="button button--primary">
-                  Кабінет ({user?.fullName?.split(' ')[0]})
-                </Link>
-              )}
-            </>
+            <UserProfile user={user} />
           ) : (
             <>
               <Link to="/login" className="button button--text">Увійти</Link>

@@ -12,6 +12,7 @@ import Dormitories from "@/pages/Dormitories";
 import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import Loader from "@/components/Loader";
+import CreateDormitoryPage from "@/pages/CreateDormitoryPage";
 
 const AppRouter = () => {
   const { isAuth, isLoading, memberships } = useSelector(state => state.auth);
@@ -44,6 +45,7 @@ const AppRouter = () => {
       <Route element={isAuth ? <OnboardingLayout /> : <Navigate to="/login" replace />}>
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/dormitories" element={<Dormitories />} />
+        <Route path="/dormitories/create" element={<CreateDormitoryPage />}/>
       </Route>
 
       <Route path="*" element={<Navigate to={isAuth ? authRedirectPath : "/login"} replace />} />

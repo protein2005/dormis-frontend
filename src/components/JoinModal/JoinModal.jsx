@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { useActions } from "@/hooks/useActions";
 import Modal from '@/components/Modal';
 import './JoinModal.scss';
-import { joinByCode } from "@/store/dormitory/dormitory.actions";
 
 const JoinModal = ({ isOpen, onClose }) => {
   const {
