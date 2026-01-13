@@ -78,7 +78,7 @@ const UserProfile = ({ user }) => {
             <div className="dropdown-menu__list">
               <Link to="/onboarding" className="dropdown-item" onClick={() => setIsOpen(false)}>
                 <LayoutDashboard size={18} />
-                <span>Дашборд</span>
+                <span>Мій простір</span>
               </Link>
               <Link to="/profile/settings" className="dropdown-item" onClick={() => setIsOpen(false)}>
                 <Settings size={18} />

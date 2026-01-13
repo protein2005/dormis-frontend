@@ -12,3 +12,15 @@ export const joinByCode = createAsyncThunk(
     }
   },
 );
+
+export const createDormitory = createAsyncThunk(
+  'dormitory/createDormitory',
+  async (bodyData, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.post('/dormitory/create', bodyData);
+      return data
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  },
+);

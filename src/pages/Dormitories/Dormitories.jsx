@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   ShieldCheck, User, Settings, Plus,
   ArrowUpRight, Building2, MapPin,
-  Users, Calendar, ChevronRight
+  Users, Calendar, ChevronRight, UserPlus
 } from 'lucide-react';
 import { motion as Motion } from "framer-motion";
 import './Dormitories.scss';
+import JoinModal from "@/components/JoinModal";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -24,6 +25,7 @@ const itemVariants = {
 
 const Dormitories = () => {
   const { memberships } = useSelector(state => state.auth);
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
 
   const groups = {
     owner: {
@@ -119,10 +121,21 @@ const Dormitories = () => {
             <h1>Мій простір <span>Dormis</span></h1>
             <p>Виберіть заклад для керування або перегляду деталей</p>
           </div>
-          <Link to="/dormitories/create" className="btn-create">
-            <div className="btn-create__icon"><Plus size={20} /></div>
-            <span>Створити новий</span>
-          </Link>
+          <div className="dormitories-page__actions">
+            <Link to="/dormitories/create" className="btn-create">
+              <div className="btn-create__icon"><Plus size={20} /></div>
+              <span>Створити новий</span>
+            </Link>
+
+            <button
+              className="btn-join"
+              onClick={() => setIsJoinModalOpen(true)}
+              title="Приєднатися за кодом"
+            >
+              <UserPlus size={20} />
+              <span>Приєднатись</span>
+            </button>
+          </div>
         </Motion.header>
 
         <div className="dormitories-content">
@@ -140,6 +153,11 @@ const Dormitories = () => {
           </Motion.div>
         )}
       </Motion.div>
+
+      <JoinModal
+        isOpen={isJoinModalOpen}
+        onClose={() => setIsJoinModalOpen(false)}
+      />
     </div>
   );
 };
