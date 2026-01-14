@@ -67,10 +67,23 @@ const Dormitories = () => {
                 <div className="dorm-card__body">
                   <div className="dorm-card__top">
                     <div className="dorm-card__avatar">
-                      <Building2 size={24} />
+                      {m.dormitory.imageUrl ? (
+                        <img
+                          src={m.dormitory.imageUrl}
+                          alt={m.dormitory.name}
+                          className="dorm-card__img"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = '';
+                            e.target.classList.add('is-hidden');
+                          }}
+                        />
+                      ) : (
+                        <Building2 size={24} />
+                      )}
                     </div>
                     <div className="dorm-card__main-info">
-                      <h3>{m.dormitory.name}</h3>
+                      <h3 className="name">{m.dormitory.name}</h3>
                       <div className="address">
                         <MapPin size={14} />
                         <span>{m.dormitory.address}</span>
