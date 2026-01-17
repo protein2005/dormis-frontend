@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Plus, UserPlus } from 'lucide-react';
+import { Plus, UserPlus, Building2 } from 'lucide-react';
 import UserProfile from "@/components/UserProfile";
 import './Header.scss';
 import JoinModal from "@/components/JoinModal";
@@ -31,6 +31,13 @@ const Header = ({ variant }) => {
             <>
               {!isOnboarding && (
                 <div className="header__quick-actions">
+                  <Link
+                    to="/dormitories"
+                    className="action-btn action-btn--my-space"
+                  >
+                    <Building2 size={20} />
+                    Мій простір
+                  </Link>
                   <button
                     className="action-btn action-btn--join"
                     onClick={() => setIsJoinModalOpen(true)}

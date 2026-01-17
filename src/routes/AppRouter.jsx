@@ -13,6 +13,13 @@ import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 import Loader from "@/components/Loader";
 import CreateDormitoryPage from "@/pages/CreateDormitoryPage";
+import DashboardLayout from "@/layout/DashboardLayout";
+import DormitoryInfo from "@/pages/DormitoryInfo";
+
+const DormitoryMembers = () => <div>Список мешканців</div>;
+const RepairModule = () => <div>Модуль ремонту</div>;
+const LaundryModule = () => <div>Модуль пральні</div>;
+const PaymentModule = () => <div>Модуль оплати</div>;
 
 const AppRouter = () => {
   const { isAuth, isLoading, memberships } = useSelector(state => state.auth);
@@ -24,9 +31,7 @@ const AppRouter = () => {
     }
   }, []);
 
-  if (isLoading) {
-    return <Loader />
-  }
+  if (isLoading) return <Loader />;
 
   const authRedirectPath = memberships?.length > 0 ? "/dormitories" : "/onboarding";
 
@@ -46,6 +51,14 @@ const AppRouter = () => {
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/dormitories" element={<Dormitories />} />
         <Route path="/dormitories/create" element={<CreateDormitoryPage />}/>
+      </Route>
+
+      <Route path="/dashboard/:id" element={<DashboardLayout />}>
+        <Route index element={<DormitoryInfo />} />
+        <Route path="members" element={<DormitoryMembers />} />
+        <Route path="repairs" element={<RepairModule />} />
+        <Route path="laundry" element={<LaundryModule />} />
+        <Route path="payments" element={<PaymentModule />} />
       </Route>
 
       <Route path="*" element={<Navigate to={isAuth ? authRedirectPath : "/login"} replace />} />

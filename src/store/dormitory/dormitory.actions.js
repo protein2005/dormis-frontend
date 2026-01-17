@@ -24,3 +24,43 @@ export const createDormitory = createAsyncThunk(
     }
   },
 );
+
+export const getDormitoryById = createAsyncThunk(
+  'dormitory/getById',
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.get(`/dormitory/${id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const getDormitoryMembers = createAsyncThunk(
+  'dormitory/getMembers',
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.get(`/dormitory/${id}/members`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const updateMemberRole = createAsyncThunk(
+  'dormitory/updateMember',
+  async ({ dormId, membershipId, role, status }, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.patch(`/dormitory/${dormId}/members`, {
+        membershipId,
+        role,
+        status
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
