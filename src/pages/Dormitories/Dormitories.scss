@@ -311,9 +311,20 @@
         background: #dcfce7; color: #15803d;
         .dot { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
       }
+
       &--pending {
         background: #fef9c3; color: #a16207;
         .dot { background: #eab308; }
+      }
+
+      &--joined {
+        background: #f1f5f9; color: #475569;
+        .dot { background: #94a3b8; }
+      }
+
+      &--rejected {
+        background: #fee2e2; color: #b91c1c;
+        .dot { background: #ef4444; }
       }
     }
 

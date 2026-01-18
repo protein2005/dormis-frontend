@@ -27,6 +27,22 @@ const Dormitories = () => {
   const { memberships } = useSelector(state => state.auth);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
 
+  // Функція для відображення правильного тексту та класу статусу
+  const getStatusDisplay = (status) => {
+    switch (status) {
+      case 'active':
+        return { label: 'Активний', class: 'active' };
+      case 'pending':
+        return { label: 'На модерації', class: 'pending' };
+      case 'joined':
+        return { label: 'Гість', class: 'joined' };
+      case 'rejected':
+        return { label: 'Відхилено', class: 'rejected' };
+      default:
+        return { label: 'Гість', class: 'joined' }; // Початковий статус за кодом
+    }
+  };
+
   const groups = {
     owner: {
       title: 'Мої заклади',
@@ -45,6 +61,12 @@ const Dormitories = () => {
       items: memberships?.filter(m => m.role === 'resident'),
       icon: <User size={18} />,
       color: 'green'
+    },
+    guest: {
+      title: 'Гуртожитки (гості)',
+      items: memberships?.filter(m => m.role === 'joined'),
+      icon: <Users size={18} />,
+      color: 'orange'
     }
   };
 
@@ -61,60 +83,59 @@ const Dormitories = () => {
         </div>
 
         <div className="dorm-grid">
-          {group.items.map((m) => (
-            <Motion.div key={m._id} variants={itemVariants}>
-              <Link to={`/dashboard/${m.dormitory._id}`} className={`dorm-card dorm-card--${group.color}`}>
-                <div className="dorm-card__body">
-                  <div className="dorm-card__top">
-                    <div className="dorm-card__avatar">
-                      {m.dormitory.imageUrl ? (
-                        <img
-                          src={m.dormitory.imageUrl}
-                          alt={m.dormitory.name}
-                          className="dorm-card__img"
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = '';
-                            e.target.classList.add('is-hidden');
-                          }}
-                        />
-                      ) : (
-                        <Building2 size={24} />
-                      )}
+          {group.items.map((m) => {
+            const statusInfo = getStatusDisplay(m.status);
+            return (
+              <Motion.div key={m._id} variants={itemVariants}>
+                <Link to={`/dashboard/${m.dormitory._id}`} className={`dorm-card dorm-card--${group.color}`}>
+                  <div className="dorm-card__body">
+                    <div className="dorm-card__top">
+                      <div className="dorm-card__avatar">
+                        {m.dormitory.imageUrl ? (
+                          <img
+                            src={m.dormitory.imageUrl}
+                            alt={m.dormitory.name}
+                            className="dorm-card__img"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = '';
+                              e.target.classList.add('is-hidden');
+                            }}
+                          />
+                        ) : (
+                          <Building2 size={24} />
+                        )}
+                      </div>
+                      <div className="dorm-card__main-info">
+                        <h3 className="name">{m.dormitory.name}</h3>
+                        <div className="address">
+                          <MapPin size={14} />
+                          <span>{m.dormitory.address}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="dorm-card__main-info">
-                      <h3 className="name">{m.dormitory.name}</h3>
-                      <div className="address">
-                        <MapPin size={14} />
-                        <span>{m.dormitory.address}</span>
+
+                    <div className="dorm-card__stats">
+                      <div className="stat">
+                        <Calendar size={14} />
+                        <span>Приєднано: {new Date(m.createdAt).toLocaleDateString()}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="dorm-card__stats">
-                    <div className="stat">
-                      <Users size={14} />
-                      <span>{m.dormitory.joinType}</span>
+                  <div className="dorm-card__footer">
+                    <div className={`status-tag status-tag--${statusInfo.class}`}>
+                      <div className="dot" />
+                      {statusInfo.label}
                     </div>
-                    <div className="stat">
-                      <Calendar size={14} />
-                      <span>{new Date(m.createdAt).toLocaleDateString()}</span>
+                    <div className="action-circle">
+                      <ArrowUpRight size={18} />
                     </div>
                   </div>
-                </div>
-
-                <div className="dorm-card__footer">
-                  <div className={`status-tag status-tag--${m.status}`}>
-                    <div className="dot" />
-                    {m.status === 'active' ? 'Активний' : 'На модерації'}
-                  </div>
-                  <div className="action-circle">
-                    <ArrowUpRight size={18} />
-                  </div>
-                </div>
-              </Link>
-            </Motion.div>
-          ))}
+                </Link>
+              </Motion.div>
+            );
+          })}
         </div>
       </div>
     );
@@ -132,7 +153,7 @@ const Dormitories = () => {
           <div className="page-header__content">
             <div className="breadcrumb">Головна <ChevronRight size={12} /> Гуртожитки</div>
             <h1>Мій простір <span>Dormis</span></h1>
-            <p>Виберіть заклад для керування або перегляду деталей</p>
+            <p>Виберіть заклад для подачі заявки або керування</p>
           </div>
           <div className="dormitories-page__actions">
             <Link to="/dormitories/create" className="btn-create">
@@ -146,7 +167,7 @@ const Dormitories = () => {
               title="Приєднатися за кодом"
             >
               <UserPlus size={20} />
-              <span>Приєднатись</span>
+              <span>Приєднатись за кодом</span>
             </button>
           </div>
         </Motion.header>
@@ -161,8 +182,8 @@ const Dormitories = () => {
               <Building2 size={48} />
             </div>
             <h3>Немає підключень</h3>
-            <p>Схоже, ви ще не є учасником жодного гуртожитку.</p>
-            <Link to="/onboarding" className="btn-primary">Почати приєднання</Link>
+            <p>Використайте код запрошення, щоб приєднатися до вашого гуртожитку.</p>
+            <button onClick={() => setIsJoinModalOpen(true)} className="btn-primary">Приєднатись</button>
           </Motion.div>
         )}
       </Motion.div>

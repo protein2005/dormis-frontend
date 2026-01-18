@@ -15,6 +15,7 @@ import Loader from "@/components/Loader";
 import CreateDormitoryPage from "@/pages/CreateDormitoryPage";
 import DashboardLayout from "@/layout/DashboardLayout";
 import DormitoryInfo from "@/pages/DormitoryInfo";
+import SettlementSettings from "@/pages/SettlementSettings";
 
 const DormitoryMembers = () => <div>Список мешканців</div>;
 const RepairModule = () => <div>Модуль ремонту</div>;
@@ -55,6 +56,7 @@ const AppRouter = () => {
 
       <Route path="/dashboard/:id" element={<DashboardLayout />}>
         <Route index element={<DormitoryInfo />} />
+        <Route path="settings" element={<SettlementSettings />}/>
         <Route path="members" element={<DormitoryMembers />} />
         <Route path="repairs" element={<RepairModule />} />
         <Route path="laundry" element={<LaundryModule />} />

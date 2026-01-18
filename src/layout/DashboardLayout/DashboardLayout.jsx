@@ -17,12 +17,14 @@ import {
   LogOut,
   Building2,
   Menu,
-  X
+  X,
+  Settings
 } from 'lucide-react';
 
 import { useActions } from "@/hooks/useActions";
 import './DashboardLayout.scss';
 import UserProfile from "@/components/UserProfile";
+import SetupBanner from "@/components/SetupBanner";
 
 const DashboardLayout = () => {
   const { id } = useParams();
@@ -33,7 +35,7 @@ const DashboardLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { currentDorm, isLoading } = useSelector((state) => state.dormitory);
-  const { user } = useSelector((state) => state.auth);
+  const { memberships, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (id) getDormitoryById(id);
@@ -51,11 +53,11 @@ const DashboardLayout = () => {
     { path: `/dashboard/${id}/repairs`, icon: <Wrench size={20} />, label: 'Ремонти' },
     { path: `/dashboard/${id}/laundry`, icon: <WashingMachine size={20} />, label: 'Пральня' },
     { path: `/dashboard/${id}/payments`, icon: <CreditCard size={20} />, label: 'Оплати' },
+    { path: `/dashboard/${id}/settings`, icon: <Settings size={20} />, label: 'Налаштування' },
   ];
 
   return (
     <div className={`dashboard-container ${isMobileMenuOpen ? 'menu-open' : ''}`}>
-      {/* Overlay для закриття меню кліком по фону */}
       {isMobileMenuOpen && (
         <div className="sidebar-overlay" onClick={() => setIsMobileMenuOpen(false)} />
       )}
@@ -113,6 +115,10 @@ const DashboardLayout = () => {
 
         <section className="dashboard-content">
           <div className="dashboard-content__inner">
+            <SetupBanner
+              dormitory={currentDorm}
+              userRole={memberships?.find(m => m.dormitory._id === id)?.role}
+            />
             <Outlet context={{ currentDorm }} />
           </div>
         </section>

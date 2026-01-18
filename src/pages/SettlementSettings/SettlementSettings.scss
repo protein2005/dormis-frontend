@@ -1,0 +1,113 @@
+.settings-page {
+  .settings-header {
+    margin-bottom: 30px;
+    h2 { font-size: 24px; font-weight: 800; color: var(--color-text-black); }
+    p { color: #64748b; margin-top: 4px; font-weight: 600; }
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 24px;
+    margin-bottom: 30px;
+
+    @include tablet { grid-template-columns: 1fr; }
+  }
+
+  .settings-card {
+    background: white;
+    border-radius: 24px;
+    border: 1px solid #f1f5f9;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+
+      .icon-box {
+        @include square(36px);
+        @include flex-center;
+        border-radius: 10px;
+        &--blue { background: #eff6ff; color: var(--color-blue); }
+        &--purple { background: #f5f3ff; color: #8b5cf6; }
+      }
+
+      h3 { font-size: 16px; font-weight: 800; color: #1e293b; flex: 1; }
+
+      .btn-add {
+        @include square(32px);
+        @include flex-center;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        color: var(--color-blue);
+        cursor: pointer;
+        transition: all 0.2s;
+        &:hover { background: var(--color-blue); color: white; border-color: var(--color-blue); }
+      }
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .config-row {
+      display: flex;
+      gap: 10px;
+      animation: fadeIn 0.3s ease-out;
+
+      input {
+        flex: 1;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.2s;
+        &:focus { border-color: var(--color-blue); background: white; }
+      }
+
+      .btn-delete {
+        @include square(44px);
+        @include flex-center;
+        background: #fef2f2;
+        color: #ef4444;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        &:hover { background: #fee2e2; }
+      }
+    }
+  }
+
+  .btn-save-all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    background: var(--color-text-black);
+    color: white;
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: var(--color-blue);
+      box-shadow: 0 10px 15px -3px rgba(var(--color-blue-rgb), 0.2);
+      transform: translateY(-2px);
+    }
+  }
+}
