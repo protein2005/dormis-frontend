@@ -19,3 +19,7 @@ export const uploadFile = async (file) => {
     resource_type: response.data.resource_type
   };
 };
+
+export const deleteFile = async (publicId) => {
+  return await axios.post(`/files/delete`, { publicId });
+};

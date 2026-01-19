@@ -64,3 +64,27 @@ export const updateMemberRole = createAsyncThunk(
     }
   }
 );
+
+export const updateSettlementSettings = createAsyncThunk(
+  'dormitory/updateSettlementSettings',
+  async ({ id, settlementFields }, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.patch(`/dormitory/${id}/settlement-settings`, { settlementFields });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const submitSettlement = createAsyncThunk(
+  'dormitory/submitSettlement',
+  async ({ dormId, payload }, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.post(`/dormitory/${dormId}/settlement-submit`, payload);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);

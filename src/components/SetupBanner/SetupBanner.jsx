@@ -24,7 +24,10 @@ const SetupBanner = ({ dormitory, userRole }) => {
         <h3 className="title">Завершіть налаштування гуртожитку</h3>
         <p>Створіть форму поселення, щоб студенти могли подавати документи та приєднуватися до закладу.</p>
       </div>
-      <Link to={`/dashboard/${dormitory?._id}/settings`} className="btn-setup">
+      <Link
+        to={`/dashboard/${dormitory?._id}/settings?tab=settlement`}
+        className="btn-setup"
+      >
         Налаштувати зараз
       </Link>
     </Motion.div>

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getDormitoryById,
-  getDormitoryMembers, joinByCode, updateMemberRole
+  getDormitoryMembers, joinByCode, updateMemberRole, updateSettlementSettings
 } from "@/store/dormitory/dormitory.actions";
 
 const initialState = {
@@ -34,6 +34,10 @@ const dormitorySlice = createSlice({
       .addCase(joinByCode.fulfilled, (state, action) => {
         state.memberships.push(action.payload);
         window.location.href = '/dormitories';
+      })
+      .addCase(updateSettlementSettings.fulfilled, (state, action) => {
+        state.currentDorm = action.payload;
+        alert("Налаштування форми успішно збережено!");
       });
   }
 });
