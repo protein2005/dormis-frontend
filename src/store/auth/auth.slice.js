@@ -10,6 +10,7 @@ import {
   meAuth,
   logoutUser
 } from "@/store/auth/auth.actions";
+import { submitSettlement } from "@/store/dormitory/dormitory.actions";
 
 const initialState = {
   user: null,
@@ -45,6 +46,14 @@ const authSlice = createSlice({
         state.isAuth = false;
         state.memberships = [];
         localStorage.removeItem('token');
+      })
+      .addCase(submitSettlement.fulfilled, (state, action) => {
+        const index = state.memberships.findIndex(m => m.dormitory._id === action.payload.dormitory);
+        if (index !== -1) {
+          state.memberships[index].status = 'pending';
+          state.memberships[index].application = action.payload.application;
+        }
+        alert("Заявку успішно відправлено!");
       })
       .addMatcher(isPending(registerUser, loginUser), (state) => {
         state.isLoading = true;

@@ -5,10 +5,11 @@ import './Settlement.scss';
 import StudentSettlementForm from "@/components/StudentSettlementForm";
 import AdminSettlementReview from "@/components/AdminSettlementReview";
 import StatusInfoBox from "@/components/StatusInfoBox";
+import ApplicationPreview from "@/components/ApplicationPreview";
 
 const Settlement = () => {
   const { currentDorm } = useOutletContext();
-  const { memberships, user } = useSelector(state => state.auth);
+  const { memberships } = useSelector(state => state.auth);
 
   const myMembership = memberships?.find(m => m.dormitory._id === currentDorm?._id);
   const userRole = myMembership?.role;
@@ -29,7 +30,7 @@ const Settlement = () => {
         )}
 
         {userRole === 'resident' && (
-          <>
+          <div className="student-settlement-flow">
             {currentStatus === 'joined' && (
               <StudentSettlementForm
                 fields={currentDorm.settlementFields}
@@ -38,11 +39,14 @@ const Settlement = () => {
             )}
 
             {currentStatus === 'pending' && (
-              <StatusInfoBox
-                type="processing"
-                title="Заявка на розгляді"
-                message="Ваші документи перевіряються адміністрацією. Очікуйте на сповіщення."
-              />
+              <>
+                <StatusInfoBox
+                  type="processing"
+                  title="Заявка на розгляді"
+                  message="Ваші документи перевіряються адміністрацією. Ви можете переглянути подані дані нижче."
+                />
+                <ApplicationPreview application={myMembership.application} />
+              </>
             )}
 
             {currentStatus === 'active' && (
@@ -52,7 +56,7 @@ const Settlement = () => {
                 message={`Вітаємо! Ви успішно пройшли перевірку. Ваша кімната: ${myMembership.roomNumber || 'Буде призначена скоро'}`}
               />
             )}
-          </>
+          </div>
         )}
       </div>
     </div>
