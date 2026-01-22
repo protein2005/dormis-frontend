@@ -1,13 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getDormitoryById,
-  getDormitoryMembers, joinByCode, updateMemberRole, updateSettlementSettings
+  getDormitoryMembers, getMySettlementRequests,
+  getSettlementRequests,
+  joinByCode, submitSettlement,
+  updateMemberRole, updateRequestStatus,
+  updateSettlementSettings
 } from "@/store/dormitory/dormitory.actions";
 
 const initialState = {
   memberships: [],
   currentDorm: null,
   currentMembers: [],
+  currentRequests: [],
   isLoading: false,
   error: null
 }
@@ -35,10 +40,39 @@ const dormitorySlice = createSlice({
         state.memberships.push(action.payload);
         window.location.href = '/dormitories';
       })
+      .addCase(getSettlementRequests.pending, (state) => { state.isLoading = true; })
+      .addCase(getSettlementRequests.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentRequests = action.payload;
+      })
+      .addCase(updateRequestStatus.fulfilled, (state, action) => {
+        const index = state.currentRequests.findIndex(r => r._id === action.payload._id);
+        if (index !== -1) {
+          state.currentRequests[index] = action.payload;
+        }
+        if (action.payload.status === 'approved') {
+          const memberIndex = state.currentMembers.findIndex(m => m._id === action.payload.membership);
+          if (memberIndex !== -1) {
+            state.currentMembers[memberIndex].status = 'active';
+            state.currentMembers[memberIndex].roomNumber = action.payload.roomNumber;
+          }
+        }
+      })
+      .addCase(submitSettlement.fulfilled, (state, action) => {
+        state.currentRequests.push(action.payload);
+        const dormId = action.payload.dormitory;
+        const membership = state.memberships.find(m => m.dormitory._id === dormId);
+        if (membership) {
+          membership.lastRequest = action.payload;
+        }
+      })
       .addCase(updateSettlementSettings.fulfilled, (state, action) => {
         state.currentDorm = action.payload;
         alert("Налаштування форми успішно збережено!");
-      });
+      })
+      .addCase(getMySettlementRequests.fulfilled, (state, action) => {
+        state.currentRequests = action.payload;
+      })
   }
 });
 

@@ -49,22 +49,6 @@ export const getDormitoryMembers = createAsyncThunk(
   }
 );
 
-export const updateMemberRole = createAsyncThunk(
-  'dormitory/updateMember',
-  async ({ dormId, membershipId, role, status }, { rejectWithValue }) => {
-    try {
-      const { data } = await $api.patch(`/dormitory/${dormId}/members`, {
-        membershipId,
-        role,
-        status
-      });
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.response.data.message);
-    }
-  }
-);
-
 export const updateSettlementSettings = createAsyncThunk(
   'dormitory/updateSettlementSettings',
   async ({ id, settlementFields }, { rejectWithValue }) => {
@@ -77,11 +61,66 @@ export const updateSettlementSettings = createAsyncThunk(
   }
 );
 
+export const getSettlementRequests = createAsyncThunk(
+  'dormitory/getRequests',
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.get(`/dormitory/${id}/requests`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const updateRequestStatus = createAsyncThunk(
+  'dormitory/updateRequestStatus',
+  async ({ requestId, status, roomNumber, comment }, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.patch(`/dormitory/requests/${requestId}/status`, {
+        status,
+        roomNumber,
+        comment
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 export const submitSettlement = createAsyncThunk(
   'dormitory/submitSettlement',
   async ({ dormId, payload }, { rejectWithValue }) => {
     try {
       const { data } = await $api.post(`/dormitory/${dormId}/settlement-submit`, payload);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const updateMemberRole = createAsyncThunk(
+  'dormitory/updateMember',
+  async ({ dormId, membershipId, role }, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.patch(`/dormitory/${dormId}/members`, {
+        membershipId,
+        role
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const getMySettlementRequests = createAsyncThunk(
+  'dormitory/getMyRequests',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.get('/dormitory/my-requests');
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);

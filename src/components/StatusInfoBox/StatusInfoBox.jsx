@@ -36,7 +36,7 @@ const StatusInfoBox = ({ type, title, message }) => {
         {icon}
       </div>
       <div className="status-info-box__content">
-        <h3>{title}</h3>
+        <h3 className="title">{title}</h3>
         <p>{message}</p>
       </div>
     </Motion.div>

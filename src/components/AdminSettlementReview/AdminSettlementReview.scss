@@ -1,16 +1,49 @@
 .admin-review {
-  .review-header {
-    margin-bottom: 24px;
-    .stat-pill {
-      display: inline-flex;
+  .settings-tabs {
+    display: flex;
+    gap: 8px;
+    background: #f1f5f9;
+    padding: 6px;
+    border-radius: 16px;
+    width: fit-content;
+    margin-bottom: 40px;
+
+    @include mobile {
+      width: 100%;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .tab-btn {
+      position: relative;
+      display: flex;
       align-items: center;
-      gap: 8px;
-      background: #eff6ff;
-      color: var(--color-blue);
-      padding: 8px 16px;
-      border-radius: 100px;
-      font-size: 14px;
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: #64748b;
       font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+
+      span { position: relative; z-index: 2; }
+      svg { position: relative; z-index: 2; }
+
+      &--active {
+        color: var(--color-blue);
+      }
+
+      .tab-indicator {
+        position: absolute;
+        inset: 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        z-index: 1;
+      }
     }
   }
 
@@ -30,7 +63,11 @@
     justify-content: space-between;
     transition: all 0.3s ease;
 
-    &:hover { border-color: var(--color-blue); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    &:hover {
+      border-color: var(--color-blue);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      transform: translateX(4px);
+    }
 
     &__user {
       display: flex;
@@ -57,11 +94,16 @@
       }
     }
 
-    &__actions {
-      display: flex;
-      align-items: center;
-      gap: 20px;
+    &__meta {
+      margin: 0 20px;
+      .date {
+        font-size: 13px;
+        color: #94a3b8;
+        font-weight: 600;
+      }
+    }
 
+    &__actions {
       .btn-view {
         display: flex;
         align-items: center;
@@ -75,120 +117,22 @@
         color: #64748b;
         cursor: pointer;
         transition: all 0.2s;
-        &:hover { background: white; border-color: var(--color-blue); color: var(--color-blue); }
-      }
-
-      .quick-actions {
-        display: flex;
-        gap: 8px;
-        button {
-          @include square(40px);
-          @include flex-center;
-          border: none;
-          border-radius: 10px;
-          cursor: pointer;
-          transition: all 0.2s;
+        &:hover {
+          background: var(--color-text-black);
+          border-color: var(--color-text-black);
+          color: white;
         }
-        .btn-approve { background: #f0fdf4; color: #16a34a; &:hover { background: #16a34a; color: white; } }
-        .btn-reject { background: #fef2f2; color: #ef4444; &:hover { background: #ef4444; color: white; } }
       }
     }
   }
-}
 
-.app-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(4px);
-  @include flex-center;
-  z-index: 1000;
-  padding: 20px;
-
-  .app-modal {
+  .placeholder-card {
     background: white;
-    width: 100%;
-    max-width: 700px;
-    border-radius: 32px;
-    display: flex;
-    flex-direction: column;
-    max-height: 90vh;
-    overflow: hidden;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
-
-    .modal-header {
-      padding: 30px;
-      border-bottom: 1px solid #f1f5f9;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      h3 { font-size: 20px; font-weight: 800; }
-      .close-btn { background: none; border: none; color: #cbd5e1; cursor: pointer; &:hover { color: #ef4444; } }
-    }
-
-    .modal-body {
-      padding: 30px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-
-      h4 { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 15px; }
-
-      .responses-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-        .response-box {
-          background: #f8fafc;
-          padding: 16px;
-          border-radius: 16px;
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          .label { font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
-          .value { font-weight: 700; color: var(--color-text-black); }
-        }
-      }
-
-      .docs-list {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        .doc-link {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 16px;
-          background: #f1f5f9;
-          border-radius: 16px;
-          text-decoration: none;
-          color: var(--color-text-black);
-          font-weight: 700;
-          transition: all 0.2s;
-          span { flex: 1; }
-          &:hover { background: #eff6ff; color: var(--color-blue); }
-        }
-      }
-    }
-
-    .modal-footer {
-      padding: 24px 30px;
-      background: #f8fafc;
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 16px;
-
-      button {
-        padding: 16px;
-        border-radius: 16px;
-        font-weight: 800;
-        cursor: pointer;
-        border: none;
-        transition: all 0.3s;
-      }
-      .btn-reject-full { background: #fef2f2; color: #ef4444; &:hover { background: #fee2e2; } }
-      .btn-approve-full { background: var(--color-text-black); color: white; &:hover { background: var(--color-blue); } }
-    }
+    padding: 60px;
+    border-radius: 24px;
+    border: 2px dashed #e2e8f0;
+    text-align: center;
+    color: #94a3b8;
+    font-weight: 600;
   }
 }
