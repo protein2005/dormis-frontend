@@ -1,3 +1,24 @@
-.settlement {
+.settlement-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+  margin-top: 24px;
 
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
+
+  &__main {
+    min-width: 0;
+  }
+
+  &__sidebar {
+    position: sticky;
+    top: 24px;
+  }
+}
+
+.status-container {
+  margin-bottom: 24px;
 }

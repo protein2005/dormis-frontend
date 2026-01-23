@@ -10,6 +10,7 @@ import StatusInfoBox from "@/components/StatusInfoBox";
 import ApplicationPreview from "@/components/ApplicationPreview";
 
 import './Settlement.scss';
+import RequestHistory from "@/components/RequestHistory";
 
 const Settlement = () => {
   const { currentDorm } = useOutletContext();
@@ -77,7 +78,14 @@ const Settlement = () => {
                   message="Ви успішно подали документи. Очікуйте на перевірку адміністратором."
                   icon={<Clock size={24} />}
                 />
-                <ApplicationPreview request={myRequest} />
+                <div className="settlement-grid">
+                  <div className="settlement-grid__main">
+                    <ApplicationPreview request={myRequest} />
+                  </div>
+                  <aside className="settlement-grid__sidebar">
+                    <RequestHistory logs={myRequest.logs} />
+                  </aside>
+                </div>
               </div>
             )}
 
@@ -114,7 +122,14 @@ const Settlement = () => {
                   message={`Вітаємо! Процес поселення завершено. Ваша кімната: ${myMembership.roomNumber || 'Буде призначена скоро'}`}
                   icon={<CheckCircle size={24} />}
                 />
-                {myRequest && <ApplicationPreview request={myRequest} />}
+                <div className="settlement-grid">
+                  <div className="settlement-grid__main">
+                    <ApplicationPreview request={myRequest} />
+                  </div>
+                  <aside className="settlement-grid__sidebar">
+                    <RequestHistory logs={myRequest?.logs} />
+                  </aside>
+                </div>
               </div>
             )}
 

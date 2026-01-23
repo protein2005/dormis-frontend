@@ -1,0 +1,97 @@
+.history-card {
+  background: white;
+  border-radius: 28px;
+  padding: 28px;
+  border: 1px solid #f1f5f9;
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--color-text-black);
+    }
+
+    svg {
+      color: var(--color-blue);
+    }
+  }
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: #f1f5f9;
+
+    }
+    .log-item {
+      display: flex;
+      gap: 20px;
+      position: relative;
+
+      .log-marker {
+        @include square(30px);
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 50%;
+
+        @include flex-center;
+        z-index: 1;
+        color: #94a3b8;
+        transition: all 0.3s;
+      }
+
+      &.approved .log-marker {
+        border-color: #16a34a;
+        color: #16a34a;
+        background: #f0fdf4;
+      }
+
+      &.rejected .log-marker {
+        border-color: #ef4444;
+        color: #ef4444;
+        background: #fef2f2;
+      }
+
+      &.initial .log-marker {
+        background: var(--color-blue);
+        border-color: var(--color-blue);
+        @include square(12px); margin: 9px;
+      }
+
+      .log-content {
+        .log-date {
+          font-size: 11px;
+          font-weight: 700;
+          color: #94a3b8;
+          display: block;
+          margin-bottom: 2px;
+          text-transform: uppercase;
+        }
+
+        p {
+          font-size: 13px;
+          font-weight: 600;
+          color: #475569;
+          line-height: 1.4;
+
+          strong {
+            color: var(--color-text-black);
+          }
+        }
+      }
+    }
+  }
+}

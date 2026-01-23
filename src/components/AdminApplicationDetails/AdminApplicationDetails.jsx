@@ -8,6 +8,7 @@ import {
 import { useActions } from "@/hooks/useActions";
 import ApplicationPreview from "@/components/ApplicationPreview";
 import './AdminApplicationDetails.scss';
+import RequestHistory from "@/components/RequestHistory";
 
 const AdminApplicationDetails = () => {
   const { dormId, membershipId } = useParams();
@@ -111,24 +112,7 @@ const AdminApplicationDetails = () => {
                 </div>
               </div>
             )}
-
-            <div className="history-card">
-              <div className="card-top">
-                <Clock size={20} />
-                <h3>Історія заявки</h3>
-              </div>
-              <div className="timeline">
-                {request.logs?.map((log, i) => (
-                  <div key={i} className="log-item">
-                    <div className="log-marker"></div>
-                    <div className="log-content">
-                      <span className="log-date">{new Date(log.createdAt).toLocaleString()}</span>
-                      <p><strong>{log.action}</strong>: {log.comment}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <RequestHistory logs={request.logs} />
           </div>
         </aside>
       </div>
