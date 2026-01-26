@@ -47,3 +47,15 @@ export const logoutUser = createAsyncThunk(
     }
   },
 );
+
+export const updateProfile = createAsyncThunk(
+  'auth/updateProfile',
+  async (updateData, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.patch('/user/profile', updateData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  },
+);

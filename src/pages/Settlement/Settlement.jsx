@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useActions } from "@/hooks/useActions";
-import { Clock, CheckCircle, AlertCircle, RefreshCcw, Loader2 } from 'lucide-react';
+import { Clock, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 
 import StudentSettlementForm from "@/components/StudentSettlementForm";
 import AdminSettlementReview from "@/components/AdminSettlementReview";
@@ -11,10 +11,11 @@ import ApplicationPreview from "@/components/ApplicationPreview";
 
 import './Settlement.scss';
 import RequestHistory from "@/components/RequestHistory";
+import GenderWarning from "@/components/GenderWarning";
 
 const Settlement = () => {
   const { currentDorm } = useOutletContext();
-  const { memberships } = useSelector(state => state.auth);
+  const { memberships, user } = useSelector(state => state.auth);
   const { currentRequests } = useSelector(state => state.dormitory);
   const { getMySettlementRequests, getSettlementRequests } = useActions();
 
@@ -28,6 +29,8 @@ const Settlement = () => {
   const myRequest = currentRequests?.find(req =>
     (req.dormitory?._id === currentDorm?._id || req.dormitory === currentDorm?._id)
   );
+
+  const hasNoGender = !user?.gender;
 
   useEffect(() => {
     if (!currentDorm?._id) return;
@@ -56,6 +59,10 @@ const Settlement = () => {
       </header>
 
       <div className="settlement-content">
+        {userRole === 'resident' && hasNoGender && (
+          <GenderWarning />
+        )}
+
         {(userRole === 'owner' || userRole === 'admin') && (
           <AdminSettlementReview dormId={currentDorm._id} />
         )}
@@ -63,7 +70,7 @@ const Settlement = () => {
         {userRole === 'resident' && (
           <div className="student-flow">
 
-            {currentStatus === 'joined' && (!myRequest || myRequest.status === 'cancelled') && (
+            {currentStatus === 'joined' && !hasNoGender && (!myRequest || myRequest.status === 'cancelled') && (
               <StudentSettlementForm
                 fields={currentDorm.settlementFields}
                 dormId={currentDorm._id}
@@ -98,19 +105,14 @@ const Settlement = () => {
                   icon={<AlertCircle size={24} />}
                 />
 
-                {myRequest.logs?.find(l => l.action === 'rejected')?.comment && (
-                  <div className="admin-feedback">
-                    <h5>Коментар модератора:</h5>
-                    <p>{myRequest.logs.find(l => l.action === 'rejected').comment}</p>
+                <div className="settlement-grid">
+                  <div className="settlement-grid__main">
+                    <ApplicationPreview request={myRequest} />
                   </div>
-                )}
-
-                <div className="action-retry">
-                  <button className="btn-retry" onClick={() => window.location.reload()}>
-                    <RefreshCcw size={18} /> Спробувати ще раз
-                  </button>
+                  <aside className="settlement-grid__sidebar">
+                    <RequestHistory logs={myRequest?.logs} />
+                  </aside>
                 </div>
-                <ApplicationPreview request={myRequest} />
               </div>
             )}
 

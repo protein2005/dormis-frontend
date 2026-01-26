@@ -7,13 +7,18 @@ const Register = () => {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isSubmitting }
-  } = useForm({ mode: 'onChange' });
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: { gender: 'male' }
+  });
 
   const { registerUser } = useActions();
+  const selectedGender = watch("gender")
 
   const onSubmit = async (data) => {
-    console.log(data)
     registerUser(data);
   };
 
@@ -41,6 +46,27 @@ const Register = () => {
               })}
             />
             {errors.fullName && <span className="error-message">{errors.fullName.message}</span>}
+          </div>
+
+          <div className="auth-form__field">
+            <label>Стать</label>
+            <div className="gender-selector">
+              <button
+                type="button"
+                className={`gender-btn ${selectedGender === 'male' ? 'active' : ''}`}
+                onClick={() => setValue('gender', 'male')}
+              >
+                Чоловіча
+              </button>
+              <button
+                type="button"
+                className={`gender-btn ${selectedGender === 'female' ? 'active' : ''}`}
+                onClick={() => setValue('gender', 'female')}
+              >
+                Жіноча
+              </button>
+              <input type="hidden" {...register('gender', { required: true })} />
+            </div>
           </div>
 
           <div className="auth-form__field">

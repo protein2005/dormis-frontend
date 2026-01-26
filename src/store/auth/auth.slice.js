@@ -8,7 +8,7 @@ import {
   registerUser,
   loginUser,
   meAuth,
-  logoutUser
+  logoutUser, updateProfile
 } from "@/store/auth/auth.actions";
 import { submitSettlement } from "@/store/dormitory/dormitory.actions";
 
@@ -54,6 +54,9 @@ const authSlice = createSlice({
           state.memberships[index].application = action.payload.application;
         }
         alert("Заявку успішно відправлено!");
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
       })
       .addMatcher(isPending(registerUser, loginUser), (state) => {
         state.isLoading = true;

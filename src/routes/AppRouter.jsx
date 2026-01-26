@@ -18,6 +18,7 @@ import DormitoryInfo from "@/pages/DormitoryInfo";
 import DormitorySettings from "@/pages/DormitorySettings";
 import Settlement from "@/pages/Settlement";
 import AdminApplicationDetails from "@/components/AdminApplicationDetails";
+import ProfileSettings from "@/pages/ProfileSettings";
 
 const DormitoryMembers = () => <div>Список мешканців</div>;
 const RepairModule = () => <div>Модуль ремонту</div>;
@@ -43,6 +44,7 @@ const AppRouter = () => {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/oauth-success" element={<OAuthSuccess />} />
+        <Route path="/profile/settings" element={<ProfileSettings />}/>
       </Route>
 
       <Route element={!isAuth ? <MainLayout /> : <Navigate to={authRedirectPath} replace />}>

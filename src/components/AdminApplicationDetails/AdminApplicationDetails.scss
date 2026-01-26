@@ -70,6 +70,22 @@
             font-size: 14px;
             font-weight: 600;
             color: #64748b;
+
+            &.gender--male {
+              padding: 5px 10px;
+              background: #eff6ff;
+              color: #2563eb;
+              border-radius: 16px;
+              svg { color: #2563eb; }
+            }
+
+            &.gender--female {
+              padding: 5px 10px;
+              background: #fdf2f8;
+              color: #db2777;
+              border-radius: 16px;
+              svg { color: #db2777; }
+            }
           }
         }
       }

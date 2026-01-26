@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
-  ArrowLeft, CheckCircle2, XCircle, Clock,
-  ShieldCheck, Mail, Calendar, MapPin, User
+  ArrowLeft, CheckCircle2, XCircle,
+  ShieldCheck, Mail, Calendar, MapPin, User, Mars, Venus
 } from 'lucide-react';
 import { useActions } from "@/hooks/useActions";
 import ApplicationPreview from "@/components/ApplicationPreview";
@@ -60,6 +60,17 @@ const AdminApplicationDetails = () => {
             <h1 className='title'>{request.user?.fullName}</h1>
             <div className="hero-badges">
               <span className="badge"><Mail size={14} /> {request.user?.email}</span>
+              <span className={`badge gender-badge gender--${request.user?.gender}`}>
+                {request.user?.gender === 'male' ? (
+                  <>
+                    <Mars size={14} /> Чоловік
+                  </>
+                ) : (
+                  <>
+                    <Venus size={14} /> Жінка
+                  </>
+                )}
+              </span>
               <span className="badge"><Calendar size={14} /> Створено: {new Date(request.createdAt).toLocaleDateString()}</span>
             </div>
           </div>

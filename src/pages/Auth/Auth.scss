@@ -66,6 +66,38 @@
         background-color: var(--color-red-light);
       }
     }
+
+    .gender-selector {
+      display: flex;
+      background: var(--color-white-dark);
+      padding: 4px;
+      border-radius: var(--border-radius-small);
+      border: var(--border);
+      gap: 4px;
+
+      .gender-btn {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        background: transparent;
+        border-radius: calc(var(--border-radius-small) - 2px);
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--color-text-gray);
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: var(--color-text-black);
+        }
+
+        &.active {
+          background: var(--color-white);
+          color: var(--color-blue);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+      }
+    }
   }
 }
 
