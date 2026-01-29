@@ -80,49 +80,49 @@ const AdminApplicationDetails = () => {
       <div className="details-layout">
         <main className="details-main">
           <ApplicationPreview request={request} />
+          {request.status === 'pending' && (
+            <div className="decision-card">
+              <div className="card-top">
+                <ShieldCheck size={20} />
+                <h3>Прийняти рішення</h3>
+              </div>
+
+              <div className="form-group">
+                <label>Номер кімнати</label>
+                <div className="input-wrapper">
+                  <MapPin size={16} />
+                  <input
+                    type="text"
+                    placeholder="Напр: 402-А"
+                    value={roomNumber}
+                    onChange={(e) => setRoomNumber(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>Коментар для студента</label>
+                <textarea
+                  placeholder="Причина або вказівки..."
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                />
+              </div>
+
+              <div className="decision-buttons">
+                <button className="btn-approve" onClick={() => handleAction('approved')} disabled={!roomNumber}>
+                  <CheckCircle2 size={18} /> Схвалити
+                </button>
+                <button className="btn-reject" onClick={() => handleAction('rejected')}>
+                  <XCircle size={18} /> Відхилити
+                </button>
+              </div>
+            </div>
+          )}
         </main>
 
         <aside className="details-sidebar">
           <div className="sticky-sidebar">
-            {request.status === 'pending' && (
-              <div className="decision-card">
-                <div className="card-top">
-                  <ShieldCheck size={20} />
-                  <h3>Прийняти рішення</h3>
-                </div>
-
-                <div className="form-group">
-                  <label>Номер кімнати</label>
-                  <div className="input-wrapper">
-                    <MapPin size={16} />
-                    <input
-                      type="text"
-                      placeholder="Напр: 402-А"
-                      value={roomNumber}
-                      onChange={(e) => setRoomNumber(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label>Коментар для студента</label>
-                  <textarea
-                    placeholder="Причина або вказівки..."
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                  />
-                </div>
-
-                <div className="decision-buttons">
-                  <button className="btn-approve" onClick={() => handleAction('approved')} disabled={!roomNumber}>
-                    <CheckCircle2 size={18} /> Схвалити
-                  </button>
-                  <button className="btn-reject" onClick={() => handleAction('rejected')}>
-                    <XCircle size={18} /> Відхилити
-                  </button>
-                </div>
-              </div>
-            )}
             <RequestHistory logs={request.logs} />
           </div>
         </aside>

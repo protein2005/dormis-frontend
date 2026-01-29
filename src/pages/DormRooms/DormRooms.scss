@@ -1,0 +1,246 @@
+.rooms-page {
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+
+    .header-info {
+      h1 { display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 900; color: var(--color-text-black); }
+      p { color: #64748b; font-weight: 600; font-size: 14px; margin-top: 4px; }
+    }
+
+    .btn-add-room {
+      @include flex-center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: var(--color-text-black);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover { background: var(--color-blue); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(var(--color-blue-rgb), 0.2); }
+    }
+  }
+
+  .rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+  }
+
+  .room-card {
+    background: var(--color-white);
+    border-radius: 28px; // Консистентно з вашими картками
+    padding: 24px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    &__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .number {
+        font-size: 22px;
+        font-weight: 900;
+        color: var(--color-text-black);
+      }
+
+      .gender-tag {
+        @include flex-center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 10px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+
+        &.tag--male {
+          background: #eff6ff;
+          color: #2563eb; // Синій для чоловіків
+        }
+        &.tag--female {
+          background: #fdf2f8;
+          color: #db2777; // Рожевий для жінок
+        }
+        &.tag--mixed {
+          background: #f8fafc;
+          color: #64748b;
+        }
+      }
+    }
+
+    .room-card__occupancy {
+      .progress-container {
+        height: 10px;
+        background: #f1f5f9;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 10px;
+
+        .progress-bar {
+          height: 100%;
+          background: var(--color-blue);
+          border-radius: 20px;
+
+          &.full {
+            background: #f59e0b; // Помаранчевий, якщо кімната заповнена
+          }
+        }
+      }
+
+      .occupancy-labels {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+
+        .count {
+          font-weight: 900;
+          color: var(--color-text-black);
+          font-size: 15px;
+        }
+
+        .label {
+          font-size: 12px;
+          color: #94a3b8;
+          font-weight: 700;
+        }
+      }
+    }
+
+    .room-card__residents {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 5px;
+
+      .mini-res-avatar {
+        @include square(36px); // Використання вашого міксину
+        @include flex-center;
+        background: #f8fafc;
+        border: 2px solid white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        svg {
+          color: #cbd5e1;
+        }
+      }
+
+      .empty-slot {
+        @include square(36px);
+        border: 2px dashed #e2e8f0;
+        border-radius: 12px;
+        background: transparent;
+      }
+    }
+  }
+}
+
+.add-room-form-inner {
+  .form-grid-modal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      label {
+        font-size: 13px;
+        font-weight: 800;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      input, select {
+        width: 100%;
+        padding: 14px;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        background: #f8fafc;
+        font-weight: 700;
+        font-family: inherit;
+        transition: 0.3s;
+
+        &:focus {
+          outline: none;
+          border-color: var(--color-blue);
+          background: white;
+          box-shadow: 0 0 0 4px rgba(var(--color-blue-rgb), 0.1);
+        }
+
+        &.input-error { border-color: #ef4444; }
+      }
+    }
+
+    .btn-submit-full {
+      grid-column: span 2;
+      @include flex-center;
+      gap: 10px;
+      padding: 16px;
+      border-radius: 16px;
+      border: none;
+      background: var(--color-text-black);
+      color: white;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+
+      &:hover:not(:disabled) {
+        background: var(--color-blue);
+        transform: translateY(-2px);
+      }
+
+      &:disabled { opacity: 0.6; cursor: not-allowed; }
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      .btn-submit-full { grid-column: span 1; }
+    }
+  }
+}
+
+.floor-section {
+  margin-bottom: 40px;
+
+  .floor-title {
+    font-size: 14px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #f1f5f9;
+    }
+  }
+}

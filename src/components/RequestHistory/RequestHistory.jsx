@@ -4,6 +4,11 @@ import './RequestHistory.scss';
 
 const statusConfig = {
   submitted: { label: 'Заявку подано', icon: <Send size={14} />, class: 'submitted' },
+  resubmitted: {
+    label: 'Відредаговано',
+    icon: <Send size={14} />,
+    class: 'resubmitted'
+  },
   approved: { label: 'Схвалено', icon: <CheckCircle2 size={14} />, class: 'approved' },
   rejected: { label: 'Відхилено', icon: <XCircle size={14} />, class: 'rejected' },
   comment: { label: 'Коментар', icon: <MessageSquare size={14} />, class: 'comment' }

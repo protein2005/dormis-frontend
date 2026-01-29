@@ -6,7 +6,7 @@ import { Send, Upload, FileCheck, AlertCircle, Loader2, Trash2 } from 'lucide-re
 import { motion as Motion } from 'framer-motion';
 import './StudentSettlementForm.scss';
 
-const StudentSettlementForm = ({ fields, dormId }) => {
+const StudentSettlementForm = ({ fields, dormId, initialData }) => {
   const { submitSettlement } = useActions();
   const [uploading, setUploading] = useState({});
 
@@ -21,8 +21,11 @@ const StudentSettlementForm = ({ fields, dormId }) => {
     formState: { isSubmitting, errors }
   } = useForm({
     defaultValues: {
-      responses: fields?.inputs?.map(i => ({ fieldName: i.name, value: '' })),
-      files: []
+      responses: initialData
+        ? initialData.responses
+        : fields?.inputs?.map(i => ({ fieldName: i.name, value: '' })),
+      files: initialData ? initialData.files : [],
+      wishlist: initialData ? initialData.wishlist : ''
     }
   });
 
@@ -99,7 +102,7 @@ const StudentSettlementForm = ({ fields, dormId }) => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="settlement-form">
         <div className="form-section">
-          <h4><FileCheck size={18} /> Персональні дані</h4>
+          <h4 className="title"><FileCheck size={18} /> Персональні дані</h4>
           <div className="inputs-grid">
             {fields?.inputs?.map((input, idx) => (
               <div key={input.name} className="input-group">
@@ -120,7 +123,7 @@ const StudentSettlementForm = ({ fields, dormId }) => {
         </div>
 
         <div className="form-section">
-          <h4><Upload size={18} /> Необхідні документи</h4>
+          <h4 className="title"><Upload size={18} /> Необхідні документи</h4>
           <div className="files-uploader-grid">
             {fields?.requiredFiles?.map((fileField) => {
               const uploaded = watchedFiles.find(f => f.fileName === fileField.name);
@@ -169,6 +172,17 @@ const StudentSettlementForm = ({ fields, dormId }) => {
                 </div>
               );
             })}
+          </div>
+        </div>
+
+        <div className="form-section">
+          <h4 className="title">Побажання до поселення (необов'язково)</h4>
+          <div className="input-group full-width">
+            <textarea
+              placeholder="Наприклад: хочу жити в одній кімнаті з Олександром Петренком..."
+              className="wishlist-textarea"
+              {...register('wishlist')}
+            />
           </div>
         </div>
 

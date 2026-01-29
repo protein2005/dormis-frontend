@@ -127,3 +127,46 @@ export const getMySettlementRequests = createAsyncThunk(
     }
   }
 );
+
+export const getDormRooms = createAsyncThunk(
+  'dormitory/getRooms',
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.get(`/dormitory/${id}/rooms`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const addRoom = createAsyncThunk(
+  'dormitory/addRoom',
+  async ({ dormId, roomNumber, capacity, gender, floor }, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.post(`/dormitory/${dormId}/rooms`, {
+        roomNumber,
+        capacity,
+        gender,
+        floor
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const getAvailableRooms = createAsyncThunk(
+  'dormitory/getAvailableRooms',
+  async ({ dormId, gender }, { rejectWithValue }) => {
+    try {
+      const { data } = await $api.get(`/dormitory/${dormId}/rooms/available`, {
+        params: { gender }
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);

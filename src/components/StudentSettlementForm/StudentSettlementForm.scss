@@ -259,6 +259,40 @@
   }
 }
 
+.wishlist-textarea {
+  width: 100%;
+  min-height: 100px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  font-family: inherit;
+  font-weight: 600;
+  resize: vertical;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color: var(--color-blue);
+    background: white;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(var(--color-blue-rgb), 0.1);
+  }
+}
+
+.rejection-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fef2f2;
+  color: #ef4444;
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  border: 1px solid #fee2e2;
+  font-weight: 700;
+  font-size: 14px;
+}
+
 .spinner {
   animation: rotate 1s linear infinite;
 }

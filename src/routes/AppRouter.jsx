@@ -19,6 +19,7 @@ import DormitorySettings from "@/pages/DormitorySettings";
 import Settlement from "@/pages/Settlement";
 import AdminApplicationDetails from "@/components/AdminApplicationDetails";
 import ProfileSettings from "@/pages/ProfileSettings";
+import DormRooms from "@/pages/DormRooms";
 
 const DormitoryMembers = () => <div>Список мешканців</div>;
 const RepairModule = () => <div>Модуль ремонту</div>;
@@ -63,6 +64,7 @@ const AppRouter = () => {
         <Route path="settlement" element={<Settlement />} />
         <Route path="settlement/review/:membershipId" element={<AdminApplicationDetails />} />
         <Route path="settings" element={<DormitorySettings />}/>
+        <Route path="rooms" element={<DormRooms />}/>
         <Route path="members" element={<DormitoryMembers />} />
         <Route path="repairs" element={<RepairModule />} />
         <Route path="laundry" element={<LaundryModule />} />

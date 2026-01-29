@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  addRoom, getAvailableRooms,
   getDormitoryById,
-  getDormitoryMembers, getMySettlementRequests,
+  getDormitoryMembers, getDormRooms, getMySettlementRequests,
   getSettlementRequests,
   joinByCode, submitSettlement,
   updateMemberRole, updateRequestStatus,
@@ -13,6 +14,8 @@ const initialState = {
   currentDorm: null,
   currentMembers: [],
   currentRequests: [],
+  rooms: [],
+  availableRooms: [],
   isLoading: false,
   error: null
 }
@@ -58,8 +61,23 @@ const dormitorySlice = createSlice({
           }
         }
       })
+      // .addCase(submitSettlement.fulfilled, (state, action) => {
+      //   state.currentRequests.push(action.payload);
+      //   const dormId = action.payload.dormitory;
+      //   const membership = state.memberships.find(m => m.dormitory._id === dormId);
+      //   if (membership) {
+      //     membership.lastRequest = action.payload;
+      //   }
+      // })
       .addCase(submitSettlement.fulfilled, (state, action) => {
-        state.currentRequests.push(action.payload);
+        const index = state.currentRequests.findIndex(r => r._id === action.payload._id);
+
+        if (index !== -1) {
+          state.currentRequests[index] = action.payload;
+        } else {
+          state.currentRequests.push(action.payload);
+        }
+
         const dormId = action.payload.dormitory;
         const membership = state.memberships.find(m => m.dormitory._id === dormId);
         if (membership) {
@@ -72,6 +90,16 @@ const dormitorySlice = createSlice({
       })
       .addCase(getMySettlementRequests.fulfilled, (state, action) => {
         state.currentRequests = action.payload;
+      })
+      .addCase(getDormRooms.fulfilled, (state, action) => {
+        state.rooms = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(addRoom.fulfilled, (state, action) => {
+        state.rooms.push(action.payload);
+      })
+      .addCase(getAvailableRooms.fulfilled, (state, action) => {
+        state.availableRooms = action.payload;
       })
   }
 });

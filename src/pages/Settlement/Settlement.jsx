@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useActions } from "@/hooks/useActions";
-import { Clock, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Clock, CheckCircle, ArrowLeft, Loader2, Edit3 } from 'lucide-react';
 
 import StudentSettlementForm from "@/components/StudentSettlementForm";
 import AdminSettlementReview from "@/components/AdminSettlementReview";
@@ -18,6 +18,7 @@ const Settlement = () => {
   const { memberships, user } = useSelector(state => state.auth);
   const { currentRequests } = useSelector(state => state.dormitory);
   const { getMySettlementRequests, getSettlementRequests } = useActions();
+  const [isEditing, setIsEditing] = useState(false);
 
   const myMembership = memberships?.find(m =>
     (m.dormitory?._id === currentDorm?._id || m.dormitory === currentDorm?._id)
@@ -97,22 +98,43 @@ const Settlement = () => {
             )}
 
             {currentStatus === 'joined' && myRequest?.status === 'rejected' && (
-              <div className="status-container">
-                <StatusInfoBox
-                  type="error"
-                  title="Заявку відхилено"
-                  message="Адміністратор знайшов помилки у ваших документах."
-                  icon={<AlertCircle size={24} />}
-                />
+              <div className="status-container dash-content-fade">
+                {!isEditing ? (
+                  <>
+                    <StatusInfoBox
+                      type="error"
+                      title="Заявку відхилено"
+                      message={`Причина: ${myRequest.logs[myRequest.logs.length - 1]?.comment || 'Перегляньте зауваження в історії.'}`}
+                    />
 
-                <div className="settlement-grid">
-                  <div className="settlement-grid__main">
-                    <ApplicationPreview request={myRequest} />
+                    <div className="action-bar" style={{ marginBottom: '24px', display: 'flex', justifyContent: 'center' }}>
+                      <button className="btn-submit" onClick={() => setIsEditing(true)}>
+                        <Edit3 size={18} style={{ marginRight: '8px' }} /> Редагувати та подати заново
+                      </button>
+                    </div>
+
+                    <div className="settlement-grid">
+                      <div className="settlement-grid__main">
+                        <ApplicationPreview request={myRequest} />
+                      </div>
+                      <aside className="settlement-grid__sidebar">
+                        <RequestHistory logs={myRequest?.logs} />
+                      </aside>
+                    </div>
+                  </>
+                ) : (
+                  <div className="edit-flow">
+                    <button className="back-link" onClick={() => setIsEditing(false)} style={{ marginBottom: '20px', border: 'none', background: 'none', cursor: 'pointer', fontWeight: 700, color: '#64748b' }}>
+                      <ArrowLeft size={18} /> Скасувати редагування
+                    </button>
+
+                    <StudentSettlementForm
+                      fields={currentDorm.settlementFields}
+                      dormId={currentDorm._id}
+                      initialData={myRequest}
+                    />
                   </div>
-                  <aside className="settlement-grid__sidebar">
-                    <RequestHistory logs={myRequest?.logs} />
-                  </aside>
-                </div>
+                )}
               </div>
             )}
 
@@ -134,7 +156,6 @@ const Settlement = () => {
                 </div>
               </div>
             )}
-
           </div>
         )}
       </div>

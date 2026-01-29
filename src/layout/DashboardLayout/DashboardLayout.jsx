@@ -18,6 +18,7 @@ import {
   Building2,
   Menu,
   X,
+  BedDouble,
   Settings,
 } from 'lucide-react';
 
@@ -50,6 +51,7 @@ const DashboardLayout = () => {
   const menuItems = [
     { path: `/dashboard/${id}`, icon: <LayoutDashboard size={20} />, label: 'Головна' },
     { path: `/dashboard/${id}/settlement`, icon: <Building2 size={20} />, label: 'Поселення' },
+    { path: `/dashboard/${id}/rooms`, icon: <BedDouble size={20} />, label: 'Кімнати' },
     { path: `/dashboard/${id}/members`, icon: <Users size={20} />, label: 'Мешканці' },
     { path: `/dashboard/${id}/repairs`, icon: <Wrench size={20} />, label: 'Ремонти' },
     { path: `/dashboard/${id}/laundry`, icon: <WashingMachine size={20} />, label: 'Пральня' },
