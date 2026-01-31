@@ -20,6 +20,7 @@ import {
   X,
   BedDouble,
   Settings,
+  Bed,
 } from 'lucide-react';
 
 import { useActions } from "@/hooks/useActions";
@@ -38,6 +39,9 @@ const DashboardLayout = () => {
   const { currentDorm, isLoading } = useSelector((state) => state.dormitory);
   const { memberships, user } = useSelector((state) => state.auth);
 
+  const currentMembership = memberships?.find(m => m.dormitory?._id === id || m.dormitory === id);
+  const isActiveMember = currentMembership?.status === 'active';
+
   useEffect(() => {
     if (id) getDormitoryById(id);
   }, [id, getDormitoryById]);
@@ -52,6 +56,7 @@ const DashboardLayout = () => {
     { path: `/dashboard/${id}`, icon: <LayoutDashboard size={20} />, label: 'Головна' },
     { path: `/dashboard/${id}/settlement`, icon: <Building2 size={20} />, label: 'Поселення' },
     { path: `/dashboard/${id}/rooms`, icon: <BedDouble size={20} />, label: 'Кімнати' },
+    { path: `/dashboard/${id}/my-room`, icon: <Bed size={20} />, label: 'Моя кімната' },
     { path: `/dashboard/${id}/members`, icon: <Users size={20} />, label: 'Мешканці' },
     { path: `/dashboard/${id}/repairs`, icon: <Wrench size={20} />, label: 'Ремонти' },
     { path: `/dashboard/${id}/laundry`, icon: <WashingMachine size={20} />, label: 'Пральня' },
