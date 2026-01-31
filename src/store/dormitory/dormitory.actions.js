@@ -75,10 +75,11 @@ export const getSettlementRequests = createAsyncThunk(
 
 export const updateRequestStatus = createAsyncThunk(
   'dormitory/updateRequestStatus',
-  async ({ requestId, status, roomNumber, comment }, { rejectWithValue }) => {
+  async ({ requestId, status, roomNumber, roomId, comment }, { rejectWithValue }) => {
     try {
       const { data } = await $api.patch(`/dormitory/requests/${requestId}/status`, {
         status,
+        roomId,
         roomNumber,
         comment
       });
