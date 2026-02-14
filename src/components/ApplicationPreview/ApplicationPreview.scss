@@ -1,0 +1,130 @@
+.application-preview {
+  background: white;
+  border-radius: 24px;
+  border: 1px solid #f1f5f9;
+  overflow: hidden;
+
+  .preview-header {
+    padding: 20px 24px;
+    background: #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--color-text-black);
+      h4 { font-weight: 800; margin: 0; }
+      svg { color: var(--color-blue); }
+    }
+
+    .submitted-date {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+  }
+
+  .preview-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .preview-section {
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+  }
+
+  .responses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+
+    .response-card {
+      background: #fdfdfe;
+      border: 1px solid #f1f5f9;
+      padding: 16px;
+      border-radius: 16px;
+
+      .field-name {
+        display: block;
+        font-size: 11px;
+        color: #94a3b8;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .field-value {
+        font-weight: 700;
+        color: var(--color-text-black);
+        font-size: 15px;
+        text-wrap: nowrap;
+      }
+    }
+  }
+
+  .files-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      text-decoration: none;
+      transition: all 0.2s ease;
+
+      .file-icon {
+        @include square(40px);
+        @include flex-center;
+        background: #eff6ff;
+        color: var(--color-blue);
+        border-radius: 10px;
+      }
+
+      .file-info {
+        .name {
+          display: block;
+          font-weight: 700;
+          color: var(--color-text-black);
+          font-size: 14px;
+        }
+        .action {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 12px;
+          color: var(--color-blue);
+          font-weight: 600;
+        }
+      }
+
+      &:hover {
+        border-color: var(--color-blue);
+        background: #f0f7ff;
+        transform: translateY(-2px);
+      }
+    }
+  }
+}

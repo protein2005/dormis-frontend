@@ -1,0 +1,67 @@
+.dorm-settings {
+  .settings-header {
+    margin-bottom: 30px;
+    &__title {
+      h2 { font-size: 26px; font-weight: 800; color: var(--color-text-black); }
+      p { color: #64748b; margin-top: 4px; font-weight: 600; }
+    }
+  }
+
+  .settings-tabs {
+    display: flex;
+    gap: 8px;
+    background: #f1f5f9;
+    padding: 6px;
+    border-radius: 16px;
+    width: fit-content;
+    margin-bottom: 40px;
+
+    @include mobile {
+      width: 100%;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .tab-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+
+      span { position: relative; z-index: 2; }
+      svg { position: relative; z-index: 2; }
+
+      &--active {
+        color: var(--color-blue);
+      }
+
+      .tab-indicator {
+        position: absolute;
+        inset: 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        z-index: 1;
+      }
+    }
+  }
+
+  .placeholder-card {
+    background: white;
+    padding: 60px;
+    border-radius: 24px;
+    border: 2px dashed #e2e8f0;
+    text-align: center;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+}

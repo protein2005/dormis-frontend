@@ -8,6 +8,8 @@ html {
 body {
   font-size: 18px;
 
+  min-height: auto;
+
   font-family:
     'San Francisco',
     -apple-system,
@@ -24,6 +26,34 @@ body {
 
 main {
   flex-grow: 1;
+}
+
+.button {
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius-small);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &--primary {
+    background: var(--color-blue);
+    color: white;
+    @include hover {
+      background: var(--color-blue-light);
+    }
+  }
+
+  &--outline {
+    border: 1px solid var(--color-border-strong);
+    @include hover { background: var(--color-white-dark); }
+  }
+
+  &--large {
+    padding: 1.2rem 2.5rem;
+    @include fluid-text(18, 16);
+  }
 }
 
 a,

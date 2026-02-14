@@ -1,0 +1,72 @@
+.join-form {
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 25px;
+  }
+
+  &__label {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-text-black);
+  }
+
+  &__input {
+    padding: 14px 16px;
+    border: var(--border-medium);
+    border-radius: var(--border-radius-small);
+    font-size: 18px;
+    transition: all 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-blue);
+      box-shadow: 0 0 0 3px var(--color-light-blue);
+    }
+
+    &.error {
+      border-color: var(--color-red-dark);
+      background-color: var(--color-red-light);
+    }
+  }
+
+  &__error {
+    color: var(--color-red-dark);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  &__hint {
+    font-size: 13px;
+    color: var(--color-text-gray);
+    line-height: 1.4;
+  }
+
+  &__actions {
+    margin-top: 10px;
+
+    button {
+      @include flex-center;
+
+      padding: 10px;
+      background: var(--color-white-dark);
+      border-radius: 12px;
+      font-weight: 600;
+      color: var(--color-text-gray);
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+
+      @include hover {
+        background-color: var(--color-blue-light);
+        color: var(--color-black);
+        transform: scale(1.05);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+}

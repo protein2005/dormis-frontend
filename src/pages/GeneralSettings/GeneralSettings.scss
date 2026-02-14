@@ -1,0 +1,75 @@
+.general-settings {
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 30px;
+
+    @include tablet { grid-template-columns: 1fr; }
+  }
+
+  .settings-card {
+    background: white;
+    border-radius: 24px;
+    border: 1px solid #f1f5f9;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+
+    &--full { grid-column: span 2; @include tablet { grid-column: span 1; } }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+
+      h3 { font-size: 16px; font-weight: 800; color: #1e293b; }
+
+      .icon-box {
+        @include square(36px);
+        @include flex-center;
+        border-radius: 10px;
+        &--blue { background: #eff6ff; color: var(--color-blue); }
+        &--purple { background: #f5f3ff; color: #8b5cf6; }
+        &--green { background: #f0fdf4; color: #16a34a; }
+      }
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+      &:last-child { margin-bottom: 0; }
+
+      label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #64748b;
+        margin-bottom: 8px;
+        svg { color: #94a3b8; }
+      }
+
+      input, textarea {
+        width: 100%;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--color-text-black);
+        outline: none;
+        transition: all 0.2s ease;
+
+        &:focus {
+          border-color: var(--color-blue);
+          background: white;
+          box-shadow: 0 0 0 4px rgba(var(--color-blue-rgb), 0.05);
+        }
+      }
+
+      textarea { resize: vertical; min-height: 100px; }
+    }
+  }
+}
